@@ -41,18 +41,7 @@ namespace FolderSync
         #endregion
 
         #region event
-        public event Action<LogType, string, string> onLog = (logType, message,filePath) => {
-
-            Console.WriteLine($"[{DateTime.Now}]: {logType} -> {message}");
-
-            // writing at the end of the file
-            using (var fileStr = new StreamWriter(File.OpenWrite(Path.Combine(filePath, "sync_log.txt"))))
-            {
-                fileStr.BaseStream.Seek(0, SeekOrigin.End);
-                fileStr.WriteLine($"[{DateTime.Now}]: {logType} -> {message}");
-            }
-
-        };
+        public event Action<LogType, string> onLog = (logType, message) => {};
         #endregion
 
         #region Constructor
@@ -94,7 +83,14 @@ namespace FolderSync
         /// <param name="message">message to write</param>
         public void LogMessage(LogType logType, string message)
         {
-            onLog(logType, message, _filePath); 
+            Console.WriteLine($"[{DateTime.Now}]: {logType} -> {message}");
+
+            // writing at the end of the file
+            using (var fileStr = new StreamWriter(File.OpenWrite(Path.Combine(_filePath, "sync_log.txt"))))
+            {
+                fileStr.BaseStream.Seek(0, SeekOrigin.End);
+                fileStr.WriteLine($"[{DateTime.Now}]: {logType} -> {message}");
+            }
             Console.WriteLine("Logged on file!");
 
         }

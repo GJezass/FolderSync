@@ -19,7 +19,7 @@ namespace FolderSync
         /// <summary>
         /// Event to be fired when logging message
         /// </summary>
-        event Action<LogType, string, string> onLog;
+        event Action<LogType, string> onLog;
 
         /// <summary>
         /// Logging message
